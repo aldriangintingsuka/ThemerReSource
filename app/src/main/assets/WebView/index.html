@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title ng-controller="TitleCtrl" ng-bind="Title"></title>
+    <meta charset="utf-8" />
+
+    <script type="text/javascript">
+      var _jsTree = null;
+
+      var _cssDependencies = [
+        'References/Bootstrap/css/bootstrap.min.css',
+        'Styles/Main.css'
+      ];
+
+      var _jsDependencies = [
+        "References/JQuery/jquery-2.0.3.min.js",
+        "References/Angular/angular-1.2.3.min.js",
+        "References/Bootstrap/js/bootstrap.min.js",
+        "References/Angular-UI/ui-bootstrap-tpls-0.7.0.min.js",
+        "TitleCtrl.js",
+        "Modules/Shell/Controllers/ShellCtrl.js",
+        "Modules/Main/Controllers/MainCtrl.js",
+        "Bootstrapper.js",
+      ];
+
+      function LoadCSSDependency( url )
+      {
+        var fileref = document.createElement( "link" );
+        fileref.rel = "stylesheet";
+        fileref.type = "text/css";
+        fileref.href = url;
+        document.getElementsByTagName( "head" )[ 0 ].appendChild( fileref );
+      }
+
+      function LoadLabJS()
+      {
+        var url = "References/LabJS/LAB.min.js";
+        var fileref = document.createElement( 'script' );
+        fileref.type = "text/javascript";
+        fileref.src = url;
+        fileref.onload = LoadDependencies;
+        document.getElementsByTagName( "head" )[ 0 ].appendChild( fileref );
+      }
+
+      function LoadDependencies()
+      {
+        _jsTree = $LAB;
+        _jsDependencies.forEach( LoadLabJSTree );
+        _jsTree.wait( Bootstrap );
+      }
+
+      function LoadLabJSTree( url )
+      {
+        _jsTree = _jsTree.script( url ).wait();
+      }
+
+      function Bootstrap()
+      {
+        angular.bootstrap( $( "html" ), ["Gylee"] );
+      }
+    </script>
+  </head>
+  <body>
+    <div id="shellContainer" ng-controller="ShellCtrl" ng-include="'Modules/Shell/Templates/Shell.html'" class="tiga-stretched"></div>
+
+    <script type="text/javascript">
+      // Must load from here instead of from head.
+      // Otherwise, in Firefox AngularJS would get throw dependency error, maybe because the page is tried to be bootstrapped while DOM is not ready yet.
+      _cssDependencies.forEach( LoadCSSDependency );
+      LoadLabJS();
+    </script>
+  </body>
+</html>

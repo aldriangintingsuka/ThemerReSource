@@ -1,0 +1,3 @@
+﻿function ShellCtrl( $scope )
+{
+}

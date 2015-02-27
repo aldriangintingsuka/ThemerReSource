@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+</head>
+<body>
+  <div class="tiga-stretched">
+    <div class="text-info">
+      <p>Select one of the available icon packs. This app will generate the script file needed by Re Source to theme your icons.</p>
+    </div>
+    <button class="btn btn-primary" ng-click="GetApplications()">Refresh list</button>
+    <div>
+      <ul class="nav nav-tabs nav-stacked">
+        <li ng-class="{'g-active':iconPack.PackageName==CurrentIconPack}" class="alert alert-info" ng-repeat="iconPack in IconPacks" ng-click="SelectItem(iconPack.PackageName)">
+          <table>
+            <tr>
+              <td><img src="{{iconPack.PackageIconString}}" width="32" height="32" /></td>
+              <td>
+                <div>
+                  <strong>{{iconPack.PackageLabel}}</strong>
+                </div>
+                <div>{{iconPack.PackageName}}</div>
+              </td>
+            </tr>
+          </table>
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

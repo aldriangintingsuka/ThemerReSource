@@ -1,0 +1,882 @@
+﻿#container
+{
+  width: 100%;
+}
+
+html, body, div, .tiga-tight, #container, .tiga-button, .tiga-button-addon, #appendedInput
+{
+  border: none;
+  font-size: 11px;
+  line-height: initial;
+  margin: 0;
+  min-height: 0;
+  padding: 0;
+}
+
+html, body, .tiga-stretched
+{
+  height: 100%;
+  width: 100%;
+}
+
+.tableContainer
+{
+  display: table;
+}
+
+#loginContainer
+{
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+}
+
+#loginForm
+{
+  -moz-border-radius: 5px;
+  background-color: #FCFCFC;
+  border: 1px solid darkgray;
+  border-radius: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 10px;
+  text-align: center;
+  width: 400px;
+}
+
+#inputEmail
+{
+  margin-top: 10px;
+}
+
+#forgetPasswordContainer
+{
+  font-size: 12px;
+  margin-right: 7px;
+  margin-top: 18px;
+}
+
+#loginFormBottom
+{
+  color: gray;
+  font-size: 12px;
+  padding-top: 5px;
+  text-align: center;
+}
+
+#topMenu
+{
+  margin-bottom: 0;
+}
+
+.noRoundBorder
+{
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+
+#droppableScreen
+{
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+#droppableScreenBackground
+{
+  -khtml-opacity: 0.7;
+  -moz-opacity: 0.7;
+  background-color: whitesmoke;
+  filter: alpha(opacity=70);
+  height: 100%;
+  left: 0;
+  opacity: 0.7;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+#droppableScreenForeground
+{
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.droppableScreenBox
+{
+  float: left;
+  height: 120px;
+  width: 120px;
+}
+
+.droppableScreenBoxHolder
+{
+  background-color: lightcyan;
+  border: solid 1px lightskyblue;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px #999999;
+  height: 118px;
+  width: 118px;
+}
+
+.droppableScreenBoxHolderHovered
+{
+  background-color: lightgoldenrodyellow;
+}
+
+.droppableScreenBoxHolderVertical
+{
+  border-right: dashed lightskyblue 2px;
+  height: 100%;
+  width: 60px;
+}
+
+.droppableScreenBoxHolderHorizontal
+{
+  border-bottom: dashed lightskyblue 2px;
+  height: 60px;
+  width: 100%;
+}
+
+.tiga-draggable-box-helper
+{
+  background-color: lightskyblue;
+  border: 1px solid lightskyblue;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px #999999;
+  height: 120px;
+  width: 120px;
+}
+
+.tiga-draggable-box-helper-header
+{
+  -moz-border-radius-topleft: 10px;
+  -moz-border-radius-topright: 10px;
+  background: linear-gradient(to bottom, white, lightskyblue, skyblue);
+  border-radius: 10px 10px 0 0;
+  color: steelblue;
+  padding-left: 5px;
+}
+
+.tiga-top-menu-dropdown .dropdown-menu > li > a
+{
+  padding: 3px 20px 3px 20px;
+}
+
+.tiga-top-menu-dropdown .dropdown-menu > li > div
+{
+  padding: 5px 20px 1px 20px;
+}
+
+.tiga-top-menu-navbar .nav > li > a
+{
+  padding: 4px 15px 4px 15px;
+}
+
+.tiga-top-menu-navbar .nav > li > div
+{
+  padding: 7px 15px 1px 15px;
+}
+
+.tiga-top-menu-navbar .nav > li > .tiga-table-setting
+{
+  padding: 7px 0 1px 0;
+}
+
+.tiga-top-menu-nav-inner
+{
+  border: none;
+  height: 28px;
+  min-height: 28px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.tiga-top-menu-nav
+{
+  height: 28px;
+}
+
+.tiga-top-menu-dropdown
+{
+  height: 28px;
+}
+
+.tiga-top-menu-dropdown-toggle
+{
+  outline: none;
+}
+
+.splitter_panel .vsplitter, .splitter_panel .hsplitter
+{
+  background-color: lightgray;
+}
+
+.splitter_panel .vsplitter
+{
+  width: 2px;
+}
+
+.splitter_panel .hsplitter
+{
+  height: 2px;
+}
+
+/*DragDropSplitter*/
+
+.tdposition
+{
+  background-color: salmon;
+  cursor: pointer;
+}
+
+.tdposition:hover
+{
+  background-color: red;
+}
+
+/*End*/
+
+/*Grid*/
+
+.gridStyle
+{
+  border-bottom: 0;
+  border-left: 0;
+  border-right: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.btnToolbarFix
+{
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.navbar .tiga-tight
+{
+  margin: 0;
+}
+
+.tiga-droppable-panel-header
+{
+  background: cornflowerblue;
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: bolder;
+  padding-left: 10px;
+  /*text-shadow: 1px -1px 0 rgba( 36, 92, 175, .5 );*/
+}
+
+#appendedInput
+{
+  border: 1px solid lightgray;
+  border-radius: 11px 0 0 11px;
+  height: 22px;
+  min-width: 140px;
+  padding-left: 8px;
+  padding-right: 5px;
+  width: 150px;
+}
+
+.tiga-button-rectangle
+{
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  height: 24px;
+  margin: 1px;
+}
+
+.tiga-button, .tiga-button-addon
+{
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  height: 24px;
+  margin: 1px;
+  width: 24px;
+}
+
+.tiga-button-addon
+{
+  margin: 0;
+}
+
+.tiga-tableName
+{
+  color: steelblue;
+  font-weight: bold;
+  margin-left: 5px;
+  margin-right: 5px;
+  /*background: linear-gradient( to bottom, lightgray, lightgray, darkgray, lightgray );*/
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.red
+{
+  background-color: red;
+}
+
+.tiga-header
+{
+  background: linear-gradient(to bottom, #f8f8f8, #dcdcdc);
+  border-left: 1px solid lightgray;
+  border-top: 1px solid lightgray;
+  color: black;
+  font-size: 12px;
+  font-weight: bolder;
+  line-height: normal;
+  margin-left: -1px;
+}
+
+.ngHeaderContainer .ngVerticalBar
+{
+  width: 0;
+}
+
+.tiga-row, .k-grid td, .k-grid tbody tr
+{
+  color: black;
+  line-height: 16px;
+  /*margin-left: 1px;
+  border-left: 1px solid lightgray;*/
+}
+
+.ngHeaderText, .ngCellText, .k-grid td
+{
+  padding: 0 5px 0 5px;
+}
+
+.tiga-checkbox
+{
+  height: 10px;
+  margin: 0;
+  padding: 0;
+  width: 10px;
+}
+
+.tiga-checkbox-offset
+{
+  margin: 0;
+  padding: 0;
+}
+
+.tiga-checkbox-offset input[type="checkbox"]
+{
+  margin-top: -5px;
+}
+
+.ngHeaderGrip
+{
+  right: 5px;
+}
+
+.pagination
+{
+  margin: 2px 10px 0 0;
+}
+
+
+/*End*/
+
+/*Dialog*/
+
+.tiga-modal
+{
+  /*  left: 0;*/
+  margin: 0 0 0 -500px;
+  /*    margin-left: auto;
+    margin-right: auto;*/
+  width: 1000px;
+  /*  max-width: 100%;*/
+}
+
+.tiga-modal-body
+{
+  height: 500px;
+}
+
+.tiga-DialogLabel
+{
+  font-size: 11px;
+}
+
+.tiga-DialogLabelBold
+{
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.fixBooleanCustomSpan
+{
+  display: inline-block;
+  margin-right: 14px;
+}
+
+.fixCurrencyCustomSpan
+{
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.tiga-DateTimeCustomSpan
+{
+  display: inline-block;
+  margin-right: 9px;
+}
+
+.tiga-timepicker
+{
+  display: inline-block;
+}
+
+.tigainvalidnumber
+{
+  background-color: red !important;
+  border-bottom-color: red !important /*hack //TODO: Clean*/;
+}
+
+.tiga-HiddenComponent
+{
+  display: none !important;
+}
+
+.tiga-relatedgridfield-height
+{
+  height: 150px
+}
+
+.modal .tiga-input, .tiga-detail-view-container .tiga-input
+{
+  cursor: text;
+  font-size: 11px;
+  height: 13px;
+  margin: 0;
+}
+
+.modal .tiga-checkbox, .tiga-detail-view-container .tiga-checkbox
+{
+  margin-top: 8px;
+}
+
+.modal .tiga-textarea, .tiga-detail-view-container .tiga-textarea
+{
+  height: auto;
+}
+
+.modal .tiga-select, .tiga-detail-view-container .tiga-select
+{
+  height: 23px;
+}
+
+.modal label, .tiga-detail-view-container label
+{
+  cursor: default;
+  margin: 0;
+}
+
+.tiga-input-long
+{
+  width: 300px;
+}
+
+.tiga-detail-view-container .tiga-link
+{
+  color: #0088cc;
+  cursor: pointer;
+}
+
+.tiga-DetailViewBody
+{
+  overflow-y: visible;
+  padding: 15px;
+  position: relative;
+  margin-top: 2px;
+  border-top: 1px solid lightgray;
+}
+/*End*/
+
+.tiga-application-title
+{
+  font-size: 11px;
+}
+
+.tiga-table-title, .tiga-credential-title
+{
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.tiga-top-menu-dropdown .dropdown-menu > li > .tiga-inmenu-header
+{
+  color: #999999;
+  font-size: 14px;
+  font-weight: bold;
+  text-indent: -5px;
+}
+
+.tiga-top-menu-dropdown .dropdown-menu > .active > .tiga-application-title
+{
+  font-weight: bold;
+}
+
+.tiga-top-menu-dropdown .dropdown-menu .tiga-application-setting
+{
+  cursor: pointer;
+}
+
+
+.tiga-top-menu-navbar .tiga-top-menu-nav > .active > div
+{
+  height: 20px;
+  background: #e5e5e5;
+}
+
+.tiga-top-menu-navbar .tiga-top-menu-nav >  li.dropdown.open > .tiga-table-inmenu
+{
+  background: transparent;
+}
+
+.tiga-top-menu-navbar .tiga-top-menu-nav > li > .tiga-sticky-table-title
+{
+  color: #0088CC;
+}
+
+.tiga-top-menu-navbar .tiga-top-menu-nav > li > .tiga-sticky-table-title:hover
+{
+  color: #22AAEE;
+}
+
+.tiga-top-menu-navbar .tiga-top-menu-nav > li > .tiga-inslot-table-title
+{
+  color: #E59728;
+}
+
+.tiga-top-menu-navbar .tiga-top-menu-nav > li > .tiga-inslot-table-title:hover
+{
+  color: #F8B94A;
+}
+
+.tiga-top-menu-navbar .tiga-top-menu-nav > li > .tiga-inmenu-table-title
+{
+  color: #333333;
+}
+
+.tiga-top-menu-navbar .tiga-top-menu-nav > li > .tiga-inmenu-table-title:hover
+{
+  color: #999999;
+}
+
+.tiga-top-menu-navbar .tiga-top-menu-nav > li > .tiga-report-table-title
+{
+  color: #DB3279;
+}
+
+.tiga-top-menu-navbar .tiga-top-menu-nav > li > .tiga-report-table-title:hover
+{
+  color: #FD549B;
+}
+
+.ngRow
+{
+  border-bottom: 0;
+}
+
+#menuContainer
+{
+  height: 28px;
+}
+
+
+.gridContainerStyle
+{
+  margin-top: 2px;
+}
+
+.toolbarContainerStyle
+{
+  background-color: white;
+  height: 26px;
+}
+
+.paginationItemStyle
+{
+  cursor: pointer;
+}
+
+.paginationContainerStyle
+{
+  background: #f3f3f3;
+  border-bottom: 1px solid lightgray;
+  border-top: 1px solid lightgray;
+  height: 25px;
+}
+
+.tiga-overflow-hidden, .tiga-stretched .tiga-overflow-hidden
+{
+  overflow: hidden;
+}
+
+.tiga-header-left-container
+{
+  cursor: pointer;
+  width: 100%;
+  /*float: left;*/
+  /*height: 24px;*/
+  /*margin-left: 5px;
+  padding-top: 5px;*/
+  /*width: calc( 100% - 10px );
+  width: -webkit-calc( 100% - 10px );
+  width: -o-calc( 100% - 10px );*/
+}
+
+.tiga-header-filter
+{
+  /*margin-left: 5px;*/
+  width: 100%;
+  /*padding-left: 5px;
+  padding-right: 5px;*/
+  /*width: -webkit-calc( 100% - 10px );
+  width: -o-calc( 100% - 10px );
+  width: calc( 100% - 10px );*/
+}
+
+.tiga-header-resizer
+{
+  float: right;
+  height: 100%;
+  position: absolute;
+  right: -5px;
+  top: 0;
+  width: 10px;
+}
+
+.tiga-header-resizer:hover
+{
+  cursor: ew-resize
+}
+
+.tiga-header-sorter
+{
+  /*float: right;*/
+}
+
+.tiga-header-sort-down
+{
+  border-color: gray transparent;
+  border-style: solid;
+  border-width: 0 5px 5px 5px;
+  height: 0;
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  width: 0;
+}
+
+.tiga-header-sort-up
+{
+  border-color: gray transparent;
+  border-style: solid;
+  border-width: 5px 5px 0 5px;
+  height: 0;
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  width: 0;
+}
+
+.tiga-header-sort-priority
+{
+  font-size: 6pt;
+  font-weight: bold;
+  left: 2px;
+  position: relative;
+  /*position: absolute;*/
+  top: -2px;
+}
+
+#panelMainContent
+{
+  overflow: auto;
+}
+
+#panelRelatedContent
+{
+  overflow: auto;
+}
+
+.pageSizerStyle
+{
+  margin-right: 30px;
+  margin-top: 2px;
+}
+
+.tooltip-inner
+{
+  background-color: white;
+  border: #000000 2px solid;
+  box-shadow: 2px 2px 2px #999999;
+  color: #000000;
+  font-weight: bold;
+  padding: 1px;
+  margin-left: 10px;
+}
+
+.disabled:hover
+{
+  cursor: default;
+}
+
+.tiga-disabled
+{
+  color: lightgray;
+}
+
+.uneditable-input:hover
+{
+  cursor: default;
+}
+
+.uneditable-textarea:hover
+{
+  cursor: default;
+}
+
+.tiga-related-table-separator
+{
+  height: 5px;
+}
+
+
+.k-grid tbody tr
+{
+  height: 16px;
+}
+
+.k-grid td
+{
+  white-space: nowrap;
+}
+
+.k-grid-header .k-header
+{
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  color: black;
+  font-size: 11px;
+  font-weight: bolder;
+  padding: 0;
+  user-select: none;
+}
+
+.tiga-header-filter .tiga-filter-box
+{
+  font-size: 11px;
+  height: 14px;
+  margin: 2px 0 2px 5px;
+  padding: 0 0 4px 5px;
+  width: -o-calc(100% - 15px);
+  width: calc(100% - 15px);
+  width: calc(100% - 15px);
+}
+
+.tiga-currency-wrapper
+{
+  position: relative;
+}
+
+.tiga-amount
+{
+  position: absolute;
+  right: 0;
+  text-align: right;
+}
+
+.tiga-GridToMuchData
+{
+  background-color: whitesmoke;
+  color: red;
+  /*position: relative;
+    top: 60px;
+    z-index: 5;*/
+}
+
+.tiga-related-table-setting
+{
+  padding-right: 5px;
+}
+
+.icon-cog
+{
+  margin: 0;
+}
+
+.tiga-modal-header
+{
+  color: black;
+  font-weight: bold;
+  background: cornflowerblue;
+}
+
+.modal-header .close
+{
+  margin-top: -2px;  
+}
+
+.k-state-selected
+{
+  background: burlywood;
+}
+
+.tiga-expand-caret
+{
+  margin-bottom: 30px; 
+  padding-bottom: 3px; 
+  color: steelblue;
+}
+
+.form-horizontal .control-group
+{
+  margin: 0 0 2px 0;
+}
+
+.form-horizontal .control-label
+{
+  padding-top: 3px;
+}
+
+.controls .tiga-DialogLabel
+{
+  padding: 3px 15px 0 3px;
+}
+
+.controls .tiga-radio
+{
+  margin-top: 3px;
+}
+
+.controls .tiga-file
+{
+  margin: -3px 0 0 0;
+  height: 23px;
+  font-size: 11px;
+}
+
+.tiga-form
+{
+  margin: 0;
+}
+
+.g-active
+{
+  background: darkblue;
+  color: white;
+}
