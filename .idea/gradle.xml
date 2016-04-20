@@ -5,7 +5,14 @@
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="1.8" />
         <option name="modules">
+          <set>
+            <option value="/data-01/home/ian/Documents/Works/Gylee/ThemerReSource" />
+            <option value="/data-01/home/ian/Documents/Works/Gylee/ThemerReSource/app" />
+          </set>
+        </option>
+        <option name="myModules">
           <set>
             <option value="/data-01/home/ian/Documents/Works/Gylee/ThemerReSource" />
             <option value="/data-01/home/ian/Documents/Works/Gylee/ThemerReSource/app" />
@@ -15,4 +22,3 @@
     </option>
   </component>
 </project>
-

@@ -26,6 +26,10 @@
         </li>
       </ul>
     </div>
+    <div ng-if="Status != 0" class="alert" ng-class="{ 'alert-danger' : Status == 1, 'alert-success' : Status == 2 }">
+      <span ng-if="Status == 1">PROCESSING</span>
+      <span ng-if="Status == 2">DONE</span>
+    </div>
   </div>
 </body>
 </html>

@@ -1,27 +1,10 @@
 package com.gfamily.resource.themer.Business.Managers;
 
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageInfo;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.AssetManager;
@@ -29,11 +12,22 @@ import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
-
 import com.google.gson.Gson;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class IconPackManager implements IIconPackManager
 {
@@ -41,6 +35,9 @@ public class IconPackManager implements IIconPackManager
   private Gson _jsonParser;
   private SharedPreferences _preference;
   private Activity _activity;
+  private HashMap<String, HashMap<String, String>> _drawableMap;
+  private String _iconMaskName;
+  private String _packageName;
 
   public IconPackManager( PackageManager pm, Gson jsonParser, SharedPreferences preference, Activity activity )
   {
@@ -48,18 +45,19 @@ public class IconPackManager implements IIconPackManager
     _jsonParser = jsonParser;
     _preference = preference;
     _activity = activity;
+    _packageName = "com.gfamily.resource.themer";
   }
 
   @Override
   @JavascriptInterface
   public String GetIconPacks()
   {
-    Log.d( "gfamily", "get icon pack" );
+    Log.d( _packageName, "get icon pack" );
     Intent mainIntent = new Intent( Intent.ACTION_MAIN, null );
     mainIntent.addCategory( "com.anddoes.launcher.THEME" );
     List<ResolveInfo> resolveInfos = _pm.queryIntentActivities( mainIntent, 0 );
 
-    ArrayList<IconPack> iconPacks = new ArrayList<IconPack>();
+    ArrayList<IconPack> iconPacks = new ArrayList<>();
 
     for( ResolveInfo resolveInfo : resolveInfos )
     {
@@ -72,13 +70,13 @@ public class IconPackManager implements IIconPackManager
     }
 
     String currentIconPack = _preference.getString( "currentIconPack", "" );
-    
-    HashMap<String,Object> resultMap = new HashMap<String, Object>();
+
+    HashMap<String, Object> resultMap = new HashMap<>();
     resultMap.put( "iconPacks", iconPacks );
     resultMap.put( "currentIconPack", currentIconPack );
-    
+
     String result = _jsonParser.toJson( resultMap );
-    Log.d( "gfamily", "current icon pack " + currentIconPack );
+    Log.d( _packageName, "current icon pack " + currentIconPack );
 
     return result;
   }
@@ -87,21 +85,22 @@ public class IconPackManager implements IIconPackManager
   @JavascriptInterface
   public String SetIconPack( String iconPackPackageName )
   {
-    Log.d( "gfamily", "set icon pack " + iconPackPackageName );
-    HashMap<String, HashMap<String, String>> drawableMap = new HashMap<String, HashMap<String, String>>();
+    Log.d( _packageName, "set icon pack " + iconPackPackageName );
+    _drawableMap = new HashMap<>();
 
     try
     {
-      boolean isFromResources = GetDrawableMapFromResources( iconPackPackageName, drawableMap );
+      boolean isFromResources = GetDrawableMapFromResources( iconPackPackageName );
 
-      if( !isFromResources ) GetDrawableMapFromAssets( iconPackPackageName, drawableMap );
-      
+      if( !isFromResources )
+        GetDrawableMapFromAssets( iconPackPackageName );
+
       SharedPreferences.Editor edit = _preference.edit();
       edit.putString( "currentIconPack", iconPackPackageName );
-      edit.commit();
+      edit.apply();
 
-      WriteScriptFile( drawableMap, iconPackPackageName );
-      
+      WriteScriptFile( iconPackPackageName );
+
       Intent intent = new Intent( "com.gfamily.resource.UPDATE_SCRIPT" );
       intent.addCategory( Intent.CATEGORY_DEFAULT );
       intent.putExtra( "content", "icon theme" );
@@ -109,23 +108,25 @@ public class IconPackManager implements IIconPackManager
     }
     catch( Exception e )
     {
+      Log.d( _packageName, e.getMessage() );
     }
 
     return null;
   }
 
-  private boolean GetDrawableMapFromResources( String iconPackPackageName, HashMap<String, HashMap<String, String>> drawableMap )
+  private boolean GetDrawableMapFromResources( String iconPackPackageName )
   {
     try
     {
       Resources themeResources = _pm.getResourcesForApplication( iconPackPackageName );
       int xmlID = themeResources.getIdentifier( "appfilter", "xml", iconPackPackageName );
 
-      if( xmlID == 0 ) return false;
+      if( xmlID == 0 )
+        return false;
 
       XmlResourceParser xmlParser = themeResources.getXml( xmlID );
 
-      ParseXml( drawableMap, xmlParser );
+      ParseXml( xmlParser );
 
       // indicate app done reading the resource.
       xmlParser.close();
@@ -139,7 +140,7 @@ public class IconPackManager implements IIconPackManager
     return true;
   }
 
-  private void GetDrawableMapFromAssets( String iconPackPackageName, HashMap<String, HashMap<String, String>> drawableMap )
+  private void GetDrawableMapFromAssets( String iconPackPackageName )
   {
     try
     {
@@ -152,7 +153,7 @@ public class IconPackManager implements IIconPackManager
       XmlPullParser xmlParser = factory.newPullParser();
 
       xmlParser.setInput( inputStream, null );
-      ParseXml( drawableMap, xmlParser );
+      ParseXml( xmlParser );
     }
     catch( Exception e )
     {
@@ -160,7 +161,7 @@ public class IconPackManager implements IIconPackManager
     }
   }
 
-  private void ParseXml( HashMap<String, HashMap<String, String>> drawableMap, XmlPullParser xmlParser ) throws XmlPullParserException, IOException
+  private void ParseXml( XmlPullParser xmlParser ) throws XmlPullParserException, IOException
   {
     int eventType = xmlParser.getEventType();
 
@@ -183,57 +184,69 @@ public class IconPackManager implements IIconPackManager
           activityName = matcher.group( 2 );
         }
 
-        if( !drawableMap.containsKey( packageName ) ) drawableMap.put( packageName, new HashMap<String, String>() );
+        if( !_drawableMap.containsKey( packageName ) )
+          _drawableMap.put( packageName, new HashMap<String, String>() );
 
-        HashMap<String, String> activityMap = drawableMap.get( packageName );
+        HashMap<String, String> activityMap = _drawableMap.get( packageName );
         activityMap.put( activityName, drawableName );
+      }
+      else if( eventType == XmlPullParser.START_TAG && xmlParser.getName().equals( "iconback" ) )
+      {
+        _iconMaskName = xmlParser.getAttributeValue( null, "img1" );
       }
 
       eventType = xmlParser.next();
     }
   }
 
-  private void WriteScriptFile( HashMap<String, HashMap<String, String>> drawableMap, String themePackageName )
+  private void WriteScriptFile( String themePackageName )
   {
     BufferedWriter bw = null;
-    File scriptFile = new File( "/sdcard/com.gfamily.resource/Mods/IconThemer.txt" );
+    File scriptFile = new File( Environment.getExternalStorageDirectory(), "com.gfamily.resource/Mods/IconThemer.txt" );
 
     try
     {
       bw = new BufferedWriter( new FileWriter( scriptFile ) );
       bw.write( "setBaseForwardPackage " + " " + themePackageName + "\n" );
 
-      List<PackageInfo> packageInfos = _pm.getInstalledPackages( PackageManager.GET_ACTIVITIES | PackageManager.GET_SERVICES );
+      List<PackageInfo> packageInfos = _pm.getInstalledPackages( PackageManager.GET_ACTIVITIES );
 
       for( PackageInfo packageInfo : packageInfos )
       {
         String packageName = packageInfo.packageName;
+        Log.d( _packageName, "Parsing app " + packageName );
 
         String appIconName = "";
         String appResourceType = "";
+        String appResourcePackageName = "";
         String iconName;
         String resourceType;
+        String resourcePackageName;
 
         try
         {
           Resources resourcesForApplication = _pm.getResourcesForApplication( packageName );
-          Map<String, Boolean> activityIconNameMap = new HashMap<String, Boolean>();
+          Map<String, Boolean> activityIconNameMap = new HashMap<>();
           int appIconResource = packageInfo.applicationInfo.icon;
 
           if( appIconResource > 0 )
           {
             appIconName = resourcesForApplication.getResourceEntryName( appIconResource );
             appResourceType = resourcesForApplication.getResourceTypeName( appIconResource );
+            appResourcePackageName = resourcesForApplication.getResourcePackageName( appIconResource );
+            Log.d( _packageName, "Icon from app resource " + appIconName + " | " + appResourceType + " | " + appResourcePackageName );
 
             activityIconNameMap.put( appIconName, false );
             bw.write( "beginReplace " + packageName + " " + appResourceType + "\n" );
-            bw.write( "withMaskResource " + appIconName + " " + "iconback" + "\n" );
-          }
-
-          if( packageInfo.activities == null || packageInfo.activities.length == 0 )
-          {
+            bw.write( "withMaskResource " + appIconName + " " + _iconMaskName + ( appResourcePackageName.equals( packageName ) ? "" : " - " + appResourcePackageName ) + "\n" );
           }
           else
+          {
+            bw.write( "beginReplace " + packageName + " " + appResourceType + "\n" );
+            bw.write( "withMaskResource " + appIconName + " " + _iconMaskName + ( appResourcePackageName.equals( packageName ) ? "" : " - " + appResourcePackageName ) + "\n" );
+          }
+
+          if( packageInfo.activities != null && packageInfo.activities.length != 0 )
           {
             for( ActivityInfo activityInfo : packageInfo.activities )
             {
@@ -247,23 +260,25 @@ public class IconPackManager implements IIconPackManager
                 {
                   iconName = resourcesForApplication.getResourceEntryName( iconResource );
                   resourceType = resourcesForApplication.getResourceTypeName( iconResource );
+                  resourcePackageName = resourcesForApplication.getResourcePackageName( iconResource );
+                  Log.d( _packageName, "Icon from app activity " + iconName + " | " + resourceType + " | " + resourcePackageName );
 
-                  String drawableName = drawableMap.containsKey( packageName ) && drawableMap.get( packageName ).containsKey( activityName ) ? drawableMap.get( packageName ).get( activityName ) : null;
+                  String drawableName = _drawableMap.containsKey( packageName ) && _drawableMap.get( packageName ).containsKey( activityName ) ? _drawableMap.get( packageName ).get( activityName ) : null;
 
                   if( !activityIconNameMap.containsKey( iconName ) || !activityIconNameMap.get( iconName ) )
                   {
                     if( !activityIconNameMap.containsKey( iconName ) || !activityIconNameMap.get( iconName ) && drawableName != null )
-                      bw.write( "beginReplace " + packageName + " " + resourceType  + "\n" );
+                      bw.write( "beginReplace " + packageName + " " + resourceType + "\n" );
 
                     if( drawableName != null )
                     {
                       activityIconNameMap.put( iconName, true );
-                      bw.write( "withResource " + iconName + " " + drawableName + "\n" );
+                      bw.write( "withResource " + iconName + " " + drawableName + ( resourcePackageName.equals( packageName ) ? "" : " - " + resourcePackageName ) + "\n" );
                     }
                     else if( !activityIconNameMap.containsKey( iconName ) )
                     {
                       activityIconNameMap.put( iconName, false );
-                      bw.write( "withMaskResource " + iconName + " " + "iconback" + "\n" );
+                      bw.write( "withMaskResource " + iconName + " " + _iconMaskName + ( resourcePackageName.equals( packageName ) ? "" : " - " + resourcePackageName ) + "\n" );
                     }
                   }
                 }
@@ -287,14 +302,15 @@ public class IconPackManager implements IIconPackManager
     }
     finally
     {
-      if( bw != null ) try
-      {
-        bw.close();
-      }
-      catch( IOException e )
-      {
-        e.printStackTrace();
-      }
+      if( bw != null )
+        try
+        {
+          bw.close();
+        }
+        catch( IOException e )
+        {
+          e.printStackTrace();
+        }
     }
   }
 
